@@ -1,0 +1,16 @@
+{
+  "name": "mdviewer",
+  "version": "0.0.0",
+  "description": "A markdown viewer",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eqmvii/markdownviewer"
+  },
+  "author": "EQMVII",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongodb": "^2.0.42"
+  }
+}
