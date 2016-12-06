@@ -48,7 +48,134 @@
 	var ReactDOM = __webpack_require__(32);
 	var App = __webpack_require__(178);
 
-	ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+	//ReactDOM.render(<App />, document.getElementById('app'));
+
+	// Below this line is the tutorial c/p
+
+	function Square(props) {
+	  return React.createElement(
+	    'button',
+	    { className: 'square', onClick: () => props.onClick() },
+	    props.value
+	  );
+	}
+
+	class Board extends React.Component {
+	  constructor() {
+	    super();
+	    this.state = {
+	      squares: Array(9).fill(null),
+	      xIsNext: true
+	    };
+	  }
+	  handleClick(i) {
+	    const squares = this.state.squares.slice();
+	    if (calculateWinner(squares) || squares[i]) {
+	      return;
+	    }
+	    squares[i] = this.state.xIsNext ? 'X' : 'O';
+	    this.setState({
+	      squares: squares,
+	      xIsNext: !this.state.xIsNext
+	    });
+	  }
+	  renderSquare(i) {
+	    return React.createElement(Square, { value: this.state.squares[i], onClick: () => this.handleClick(i) });
+	  }
+	  render() {
+	    const winner = calculateWinner(this.state.squares);
+	    let status;
+	    if (winner) {
+	      status = 'Winner: ' + winner;
+	    } else {
+	      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+	    }
+	    //const status = 'Next player: X';
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Welcome to Tic-Tac-Toe!'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'status' },
+	        status
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'board-row' },
+	        this.renderSquare(0),
+	        this.renderSquare(1),
+	        this.renderSquare(2)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'board-row' },
+	        this.renderSquare(3),
+	        this.renderSquare(4),
+	        this.renderSquare(5)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'board-row' },
+	        this.renderSquare(6),
+	        this.renderSquare(7),
+	        this.renderSquare(8)
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'h4',
+	          null,
+	          'Brought to you by: React'
+	        )
+	      )
+	    );
+	  }
+	}
+
+	class Game extends React.Component {
+	  render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'game' },
+	      React.createElement(
+	        'div',
+	        { className: 'game-board' },
+	        React.createElement(Board, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'game-info' },
+	        React.createElement('div', null),
+	        React.createElement('ol', null)
+	      )
+	    );
+	  }
+	}
+
+	// ========================================
+
+	ReactDOM.render(React.createElement(Game, null), document.getElementById('app'));
+
+	function calculateWinner(squares) {
+	  const lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+	  for (let i = 0; i < lines.length; i++) {
+	    const [a, b, c] = lines[i];
+	    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+	      return squares[a];
+	    }
+	  }
+	  return null;
+	}
 
 /***/ },
 /* 1 */
@@ -21462,6 +21589,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var Clock = __webpack_require__(179);
 
 	var App = React.createClass({
 		displayName: 'App',
@@ -21475,6 +21603,14 @@
 					null,
 					'Hellooo World!'
 				),
+				React.createElement(
+					'h3',
+					null,
+					'The time is ',
+					new Date().toLocaleTimeString(),
+					'.'
+				),
+				React.createElement(Clock, { time: 'Three!' }),
 				React.createElement(
 					'ul',
 					null,
@@ -21514,6 +21650,32 @@
 	});
 
 	module.exports = App;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	/*class Clock extends React.Component {
+		render () {
+			return <h1>Clock Works! It is {this.props.time} o'clock!</h1>
+		}
+	}*/
+
+	var Clock = React.createClass({
+		displayName: 'Clock',
+
+		render: function () {
+			return React.createElement(
+				'h1',
+				null,
+				'This is with CreateClass!'
+			);
+		}
+	});
+
+	module.exports = Clock;
 
 /***/ }
 /******/ ]);
