@@ -1,1 +1,13 @@
 "scripts": { "build": "webpack", "start": "webpack-dev-server" },
+
+
+
+
+----- Instructions: ----
+
+Add the scripts line to package.json for local development, remove it prior to deploying to Heroku
+
+Commands for local development:
+
+npm run build 
+npm run start
