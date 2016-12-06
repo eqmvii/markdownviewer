@@ -21493,6 +21493,21 @@
 					'p',
 					null,
 					'This page is somehow being served after being found by express after being found by node after being directed by server files which found the files that were built by webpack after being translated from JSX after being run through babel after being written as a component.'
+				),
+				React.createElement(
+					'p',
+					null,
+					'Also, it is connected to a running MongoDB. There is no reason that is true, however.'
+				),
+				React.createElement(
+					'p',
+					null,
+					'Also, the entire thing is written in React, which I neglected to mention above.'
+				),
+				React.createElement(
+					'p',
+					null,
+					'It is not interactive or interesting or styled in any way.'
 				)
 			);
 		}
