@@ -13,7 +13,7 @@ mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
    } else {
       console.log('Successfully connected to MongoDB on port 27017.');
    }
-
+app.use('/', express.static(process.cwd() + '/')); // hack to serve transformed
    app.use('/public', express.static(process.cwd() + '/public'));
    app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 
