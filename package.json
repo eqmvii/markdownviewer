@@ -6,7 +6,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eqmvii/markdownviewer"
-  },
+  },"scripts": { "build": "webpack", "start": "webpack-dev-server" },
 
   "author": "EQMVII",
   "license": "MIT",
