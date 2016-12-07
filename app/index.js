@@ -1,4 +1,7 @@
 var Button = require('react-bootstrap/lib/Button');
+var Col = require('react-bootstrap/lib/Col');
+//var Panel = require('react-bootstrap/lib/Panel');
+//var ButtonGroup = require('react-bootstrap/lib/ButtonGroup');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -13,11 +16,20 @@ marked.setOptions({
 class Viewer extends React.Component {
 	render () {
 		return (<div>
-		<h1>Type Markdown See Results Below</h1>
-		<form><InputBox /></form>
+			<Col lg={6} md={6} sm={12}>					
+		<h2>Markdown Viewer</h2>
+		<p>Replace the text below and see it formatted live</p>
 		<br />
-		<h2>Enjoy a game of Tic-Tac-Toe Below.</h2>
-		<Game />
+		<InputBox />
+		</Col>
+			<Col lg={6} md={6} sm={12}>
+		<h2>Tic-Tac-Toe</h2>
+		<p>Click each button to make your move.</p>
+		<br /><Game />
+		</Col>	
+
+	
+		
 		</div>)
 	}
 }
@@ -25,16 +37,28 @@ class Viewer extends React.Component {
 class InputBox extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {typed: ''};
+		this.state = {typed: '**Welcome** to the *markdown viewer!* \n * Markdown will be properly formatted \n * Even [a link](example.com)! \n *  Try it out!'};
 		this.handleChange = this.handleChange.bind(this);
 	}
 	handleChange (event){
 		this.setState({typed: event.target.value})
 	}
 	render () {
-		return (<div><textarea style={{color:"blue", height:200, width:300,borderRadius:10}} type="text" onChange={this.handleChange} />
-			<br /><div style={{background:"grey",height:200, width:300,borderRadius:10}} dangerouslySetInnerHTML={{__html: marked(this.state.typed)}}>
-      </div></div>)
+		return (<div>
+		
+			
+			<textarea style={{height:160, width:320,borderRadius:10,padding: 12}} type="text" onChange={this.handleChange} value={this.state.typed}/>
+			<br />
+			<div style={{background:"#d3d3d3",height:160, width:320,borderRadius:10, borderWidth: 20, padding:12}} dangerouslySetInnerHTML={{__html: marked(this.state.typed)}}>
+      </div><br />
+      	<div style={{background:"#d3d3d3",height:160, width:320,borderRadius:10, borderWidth: 2, padding:12}}>
+			<p>Sample Markdown:</p>
+			<p>**Welcome** to the *markdown viewer!*</p>
+			<p>* Markdown will be properly formatted</p>
+			<p>* Even [a link](example.com)! </p>
+			<p>* Try it out!</p>
+			</div>
+      </div>)
 	}
 }
 
@@ -46,8 +70,8 @@ class InputBox extends React.Component {
 function Square(props) {
   if (props.value === null)
   	{return (
-    <Button bsSize="large" className="square" onClick={() => props.onClick()}>
-      {"+"}
+    <Button bsSize="large" className="square"  onClick={() => props.onClick()}>
+      {"_"}
     </Button>
   )}
   else if (props.value === 'X')	{ 
@@ -73,25 +97,28 @@ class Board extends React.Component {
   }
   render() {
 
-    //const status = 'Next player: X';
     return (
       <div>
-      <div><h1>Welcome to Tic-Tac-Toe!</h1></div>
-        <div className="status">{status}</div>
         <div className="board-row">
+       
           {this.renderSquare(0)}
           {this.renderSquare(1)}
           {this.renderSquare(2)}
+          
           </div>
         <div className="board-row">
+     
           {this.renderSquare(3)}
           {this.renderSquare(4)}
           {this.renderSquare(5)}
+       
         </div>
         <div className="board-row">
+      
           {this.renderSquare(6)}
           {this.renderSquare(7)}
           {this.renderSquare(8)}
+        
         </div>
              </div>
     );
@@ -155,6 +182,7 @@ if (winner) {
 });
     return (
       <div className="game">
+      <div>{status}</div>
         <div className="game-board">
           <Board
     squares={current.squares}
@@ -162,7 +190,7 @@ if (winner) {
   />
         </div>
         <div className="game-info">
-          <div>{status}</div>
+          <div>Game moves history:</div>
           <ol>{moves}</ol>
         </div>
       </div>
