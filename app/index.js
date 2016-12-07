@@ -1,14 +1,23 @@
+var Button = require('react-bootstrap/lib/Button');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var App = require('./components/App');
 var marked = require('marked');
 console.log(marked('I am using __markdown__.'));
+marked.setOptions({
+  sanitize: true
+});
+
 
 class Viewer extends React.Component {
 	render () {
 		return (<div>
 		<h1>Type Markdown See Results Below</h1>
 		<form><InputBox /></form>
+		<br />
+		<h2>Enjoy a game of Tic-Tac-Toe Below.</h2>
+		<Game />
 		</div>)
 	}
 }
@@ -24,25 +33,35 @@ class InputBox extends React.Component {
 	}
 	render () {
 		return (<div><textarea style={{color:"blue", height:200, width:300,borderRadius:10}} type="text" onChange={this.handleChange} />
-			<br /><p style={{background:"grey",height:200, width:300,borderRadius:10}}>
-			{marked(this.state.typed)}</p></div>)
+			<br /><div style={{background:"grey",height:200, width:300,borderRadius:10}} dangerouslySetInnerHTML={{__html: marked(this.state.typed)}}>
+      </div></div>)
 	}
 }
 
 
-ReactDOM.render(<Viewer />,document.getElementById('app'));
 
-//ReactDOM.render(<App />, document.getElementById('app'));
 
-// Below this line is the tutorial c/p
-/*
+
 
 function Square(props) {
-  return (
-    <button className="square" onClick={() => props.onClick()}>
+  if (props.value === null)
+  	{return (
+    <Button bsSize="large" className="square" onClick={() => props.onClick()}>
+      {"+"}
+    </Button>
+  )}
+  else if (props.value === 'X')	{ 
+  	return (
+    <Button bsSize="large" bsStyle="danger" className="square" onClick={() => props.onClick()}>
       {props.value}
-    </button>
-  );
+    </Button>
+  )}
+  	else if (props.value === 'O')	{ 
+  	return (
+    <Button bsSize="large" bsStyle="primary" className="square" onClick={() => props.onClick()}>
+      {props.value}
+    </Button>
+  )}
 }
 
 
@@ -63,7 +82,7 @@ class Board extends React.Component {
           {this.renderSquare(0)}
           {this.renderSquare(1)}
           {this.renderSquare(2)}
-        </div>
+          </div>
         <div className="board-row">
           {this.renderSquare(3)}
           {this.renderSquare(4)}
@@ -74,8 +93,7 @@ class Board extends React.Component {
           {this.renderSquare(7)}
           {this.renderSquare(8)}
         </div>
-        <div><h4>Brought to you by: React</h4></div>
-      </div>
+             </div>
     );
   }
 }
@@ -98,7 +116,7 @@ class Game extends React.Component {
   if (calculateWinner(squares) || squares[i]) {
     return;
   }
-  squares[i] = this.state.xIsNext ? 'Liana' : 'O';
+  squares[i] = this.state.xIsNext ? 'X' : 'O';
   this.setState({
     history: history.concat([{
       squares: squares
@@ -121,9 +139,9 @@ const current = history[this.state.stepNumber];
 const winner = calculateWinner(current.squares);
 let status;
 if (winner) {
-  status = 'Winner: ' + winner;
+  status = winner + " HAS WON THE GAME!!!";
 } else {
-  status = 'Next player: ' + (this.state.xIsNext ? 'Liana' : 'O');
+  status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 };
   	const moves = history.map((step, move) => {
   const desc = move ?
@@ -154,11 +172,6 @@ if (winner) {
 
 // ========================================
 
-ReactDOM.render(
-  <Game />,
-  document.getElementById('app')
-);
-
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -178,4 +191,5 @@ function calculateWinner(squares) {
   }
   return null;
 }
-*/
+
+ReactDOM.render(<Viewer />,document.getElementById('app'));
