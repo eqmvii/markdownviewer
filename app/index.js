@@ -1,10 +1,41 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var App = require('./components/App');
+var marked = require('marked');
+console.log(marked('I am using __markdown__.'));
+
+class Viewer extends React.Component {
+	render () {
+		return (<div>
+		<h1>Type Markdown See Results Below</h1>
+		<form><InputBox /></form>
+		</div>)
+	}
+}
+
+class InputBox extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {typed: ''};
+		this.handleChange = this.handleChange.bind(this);
+	}
+	handleChange (event){
+		this.setState({typed: event.target.value})
+	}
+	render () {
+		return (<div><textarea style={{color:"blue", height:200, width:300,borderRadius:10}} type="text" onChange={this.handleChange} />
+			<br /><p style={{background:"grey",height:200, width:300,borderRadius:10}}>
+			{marked(this.state.typed)}</p></div>)
+	}
+}
+
+
+ReactDOM.render(<Viewer />,document.getElementById('app'));
 
 //ReactDOM.render(<App />, document.getElementById('app'));
 
 // Below this line is the tutorial c/p
+/*
 
 function Square(props) {
   return (
@@ -147,4 +178,4 @@ function calculateWinner(squares) {
   }
   return null;
 }
-
+*/

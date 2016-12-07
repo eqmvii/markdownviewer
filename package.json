@@ -6,12 +6,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eqmvii/markdownviewer"
-  },"scripts": { "build": "webpack", "start": "webpack-dev-server" },
-
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
   "author": "EQMVII",
   "license": "MIT",
   "dependencies": {
     "express": "^4.13.3",
+    "marked": "^0.3.6",
     "mongodb": "^2.0.42",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
