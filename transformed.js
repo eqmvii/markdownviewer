@@ -63,9 +63,10 @@
 	    return React.createElement(
 	      'div',
 	      null,
+	      React.createElement(Col, { lg: 1, md: 1, sm: 12 }),
 	      React.createElement(
 	        Col,
-	        { lg: 6, md: 6, sm: 12 },
+	        { lg: 5, md: 5, sm: 12 },
 	        React.createElement(
 	          'h2',
 	          null,
@@ -81,7 +82,7 @@
 	      ),
 	      React.createElement(
 	        Col,
-	        { lg: 6, md: 6, sm: 12 },
+	        { lg: 5, md: 5, sm: 12 },
 	        React.createElement(
 	          'h2',
 	          null,
@@ -94,7 +95,8 @@
 	        ),
 	        React.createElement('br', null),
 	        React.createElement(Game, null)
-	      )
+	      ),
+	      React.createElement(Col, { lg: 1, md: 1, sm: 12 })
 	    );
 	  }
 	}
@@ -153,19 +155,19 @@
 	  if (props.value === null) {
 	    return React.createElement(
 	      Button,
-	      { bsSize: 'large', className: 'square', onClick: () => props.onClick() },
-	      "_"
+	      { style: { padding: 46, margin: 6 }, bsSize: 'large', className: 'square', onClick: () => props.onClick() },
+	      ""
 	    );
 	  } else if (props.value === 'X') {
 	    return React.createElement(
 	      Button,
-	      { bsSize: 'large', bsStyle: 'danger', className: 'square', onClick: () => props.onClick() },
+	      { style: { padding: 40, margin: 6 }, bsSize: 'large', bsStyle: 'danger', className: 'square', onClick: () => props.onClick() },
 	      props.value
 	    );
 	  } else if (props.value === 'O') {
 	    return React.createElement(
 	      Button,
-	      { bsSize: 'large', bsStyle: 'primary', className: 'square', onClick: () => props.onClick() },
+	      { style: { padding: 40, margin: 6 }, bsSize: 'large', bsStyle: 'primary', className: 'square', onClick: () => props.onClick() },
 	      props.value
 	    );
 	  }
@@ -234,6 +236,15 @@
 
 	    });
 	  }
+	  handleReset() {
+	    this.setState({
+	      history: [{
+	        squares: Array(9).fill(null)
+	      }],
+	      xIsNext: true,
+	      stepNumber: 0
+	    });
+	  }
 	  jumpTo(step) {
 	    this.setState({
 	      stepNumber: step,
@@ -248,6 +259,8 @@
 	    let status;
 	    if (winner) {
 	      status = winner + " HAS WON THE GAME!!!";
+	    } else if (history.length == 10) {
+	      status = 'DRAW. Game Over.';
 	    } else {
 	      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 	    };
@@ -266,6 +279,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'game' },
+	      React.createElement(
+	        'div',
+	        { className: 'reset button' },
+	        React.createElement(ResetButton, { onClick: () => this.handleReset() })
+	      ),
 	      React.createElement(
 	        'div',
 	        null,
@@ -293,6 +311,16 @@
 	          moves
 	        )
 	      )
+	    );
+	  }
+	}
+
+	class ResetButton extends React.Component {
+	  render() {
+	    return React.createElement(
+	      Button,
+	      { bsSize: 'large', bsStyle: 'warning', onClick: () => this.props.onClick() },
+	      'Reset'
 	    );
 	  }
 	}

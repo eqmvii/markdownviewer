@@ -16,17 +16,19 @@ marked.setOptions({
 class Viewer extends React.Component {
 	render () {
 		return (<div>
-			<Col lg={6} md={6} sm={12}>					
+		<Col lg={1} md={1} sm={12} />
+			<Col lg={5} md={5} sm={12}>					
 		<h2>Markdown Viewer</h2>
 		<p>Replace the text below and see it formatted live</p>
 		<br />
 		<InputBox />
 		</Col>
-			<Col lg={6} md={6} sm={12}>
+			<Col lg={5} md={5} sm={12}>
 		<h2>Tic-Tac-Toe</h2>
 		<p>Click each button to make your move.</p>
 		<br /><Game />
 		</Col>	
+		<Col lg={1} md={1} sm={12} />
 
 	
 		
@@ -70,19 +72,19 @@ class InputBox extends React.Component {
 function Square(props) {
   if (props.value === null)
   	{return (
-    <Button bsSize="large" className="square"  onClick={() => props.onClick()}>
-      {"_"}
+    <Button style={{padding: 46, margin:6}} bsSize="large" className="square" onClick={() => props.onClick()}>
+      {""}
     </Button>
   )}
   else if (props.value === 'X')	{ 
   	return (
-    <Button bsSize="large" bsStyle="danger" className="square" onClick={() => props.onClick()}>
+    <Button style={{padding: 40, margin:6}} bsSize="large" bsStyle="danger" className="square" onClick={() => props.onClick()}>
       {props.value}
     </Button>
   )}
   	else if (props.value === 'O')	{ 
   	return (
-    <Button bsSize="large" bsStyle="primary" className="square" onClick={() => props.onClick()}>
+    <Button style={{padding: 40, margin:6}} bsSize="large" bsStyle="primary" className="square" onClick={() => props.onClick()}>
       {props.value}
     </Button>
   )}
@@ -153,6 +155,15 @@ class Game extends React.Component {
 
   });
 }
+  handleReset () {
+  	this.setState({
+  		  history: [{
+        squares: Array(9).fill(null)
+      }],
+      xIsNext: true,
+      stepNumber: 0,
+  	})
+  }
 jumpTo(step) {
   this.setState({
     stepNumber: step,
@@ -167,7 +178,10 @@ const winner = calculateWinner(current.squares);
 let status;
 if (winner) {
   status = winner + " HAS WON THE GAME!!!";
-} else {
+} else if (history.length == 10) {
+	status = 'DRAW. Game Over.';
+}
+else {
   status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 };
   	const moves = history.map((step, move) => {
@@ -182,6 +196,8 @@ if (winner) {
 });
     return (
       <div className="game">
+              <div className="reset button"><ResetButton onClick = {() => this.handleReset()}/></div>
+
       <div>{status}</div>
         <div className="game-board">
           <Board
@@ -190,12 +206,18 @@ if (winner) {
   />
         </div>
         <div className="game-info">
-          <div>Game moves history:</div>
-          <ol>{moves}</ol>
+          <div >Game moves history:</div>
+          <ol >{moves}</ol>
         </div>
       </div>
     );
   }
+}
+
+class ResetButton extends React.Component {
+	render () {
+		return <Button bsSize="large" bsStyle="warning" onClick={() => this.props.onClick()}>Reset</Button>
+	}
 }
 
 // ========================================
